@@ -1,10 +1,11 @@
 import {ECSSystem, System} from "./systems/AbstractSystem";
 import {BulletSystem} from "./systems/BulletSystem";
 import {SpaceShipFlySystem} from "./systems/SpaceShipFlySystem";
-import {ECSEntity} from "./ECSEntity";
 import {Ticker} from "pixi.js";
 import {StarsSystem} from "./systems/StarsSystem";
 import {HealthControlSystem} from "./systems/HealthControlSystem";
+import {MeteorSystem} from "./systems/MeteorSystem";
+import { ECSEntity } from "./entities/ECSEntity";
 
 
 export interface EngineEntityListener
@@ -34,6 +35,7 @@ export class ECSEngine
             SpaceShipFlySystem,
             StarsSystem,
             HealthControlSystem,
+            MeteorSystem
         ]
         return result;
     }

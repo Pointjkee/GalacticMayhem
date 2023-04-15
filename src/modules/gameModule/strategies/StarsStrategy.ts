@@ -14,14 +14,20 @@ export class StarsStrategy extends Strategy
 
     public start(): void
     {
-        const createStar = () =>
+        this._starsTimeoutId = setTimeout(() =>
         {
-            this.engine.addEntity(EntitiesFactory.createStar());
-            const interval = Utils.getRandomNumberInRange(50, 300);
-            this._starsTimeoutId = setTimeout(createStar, interval);
-        };
-        const interval = Utils.getRandomNumberInRange(0, 1);
-        this._starsTimeoutId = setTimeout(createStar, interval);
+            this.createStar();
+        }, 500);
+    }
+
+    private createStar(): void
+    {
+        this.engine.addEntity(EntitiesFactory.createStar());
+        const interval = Utils.getRandomNumberInRange(50, 300);
+        this._starsTimeoutId = setTimeout((() =>
+        {
+            this.createStar()
+        }), interval);
     }
 
     public stop(): void

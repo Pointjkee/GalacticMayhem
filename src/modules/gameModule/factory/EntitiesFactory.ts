@@ -12,6 +12,8 @@ import {StarComponent} from "../components/StarComponent";
 import {HealthBar} from "../entities/HealthBar";
 import {HealthPointsComponent} from "../components/HealthPointsComponent";
 import {HealthBarComponent} from "../components/HealthBarComponent";
+import {Meteor} from "../entities/Meteor";
+import {MeteorComponent} from "../components/MeteorComponent";
 
 export class EntitiesFactory
 {
@@ -47,6 +49,19 @@ export class EntitiesFactory
         component.sprite.scale.set(0.5, 0.5);
 
         return star;
+    }
+
+    public static createMeteor(): Meteor
+    {
+        const meteor = new Meteor();
+        meteor.addComponent(new VelocityComponent(0, 1));
+        meteor.addComponent(new PositionComponent(Utils.getRandomNumberInRange(0, PIXIS.windowWidth), 0));
+        meteor.addComponent(new HealthPointsComponent(20));
+        meteor.addComponent(new MeteorComponent(Utils.getRandomNumberInRange(5, 10)));
+        const component = meteor.addComponent(new SpriteComponent(`meteor${Utils.getRandomNumberInRange(1, 2)}`)) as SpriteComponent
+        component.sprite.scale.set(0.5, 0.5);
+
+        return meteor
     }
 
     public static createHeathBar(): HealthBar

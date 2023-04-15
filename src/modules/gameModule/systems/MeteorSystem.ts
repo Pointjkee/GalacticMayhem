@@ -1,23 +1,23 @@
 import {System} from "./AbstractSystem";
 import {ECSEngine} from "../ECSEngine";
-import {PositionComponent} from "../components/PositionComponent";
+import {ECSEntity} from "../entities/ECSEntity";
+import {StarComponent} from "../components/StarComponent";
 import {SpriteComponent} from "../components/SpriteComponent";
 import {PIXIS} from "../../../index";
-import {StarComponent} from "../components/StarComponent";
-import {ECSEntity} from "../entities/ECSEntity";
+import {PositionComponent} from "../components/PositionComponent";
 
-export class StarsSystem extends System
+export class MeteorSystem extends System
 {
     constructor(public engine: ECSEngine)
     {
-        super(["Position", "Velocity", "Star", "Sprite"], engine);
+        super(["Meteor", "Sprite", "Velocity", "Position", "HealthPoints"], engine);
     }
 
     public onEntityAdded(entity: ECSEntity): void
     {
         super.onEntityAdded(entity);
         this.addEntity(entity);
-        if (entity.hasComponent("Star")) {
+        if (entity.hasComponent("Meteor")) {
             const position = entity.getComponent<PositionComponent>("Position");
             const sprite = entity.getComponent<SpriteComponent>("Sprite").sprite;
             sprite.x = position.x;
@@ -29,9 +29,9 @@ export class StarsSystem extends System
     {
         this.entities.forEach((entity) =>
         {
-            const star = entity.getComponent<StarComponent>("Star");
+            const meteor = entity.getComponent<StarComponent>("Meteor");
             const sprite = entity.getComponent<SpriteComponent>("Sprite").sprite;
-            sprite.y += star.speed * deltaTime;
+            sprite.y += meteor.speed * deltaTime;
 
             if (sprite.y > PIXIS.windowHeight + sprite.height) {
                 this.removeEntity(entity);
