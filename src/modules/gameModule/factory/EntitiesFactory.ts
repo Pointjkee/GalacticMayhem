@@ -42,8 +42,9 @@ export class EntitiesFactory
 
         star.addComponent(new PositionComponent(Utils.getRandomNumberInRange(0, PIXIS.windowWidth), 0));
         star.addComponent(new VelocityComponent(0, 1));
-        star.addComponent(new SpriteComponent(`star${Utils.getRandomNumberInRange(1, 3)}`));
-        star.addComponent(new StarComponent(Utils.getRandomNumberInRange(5, 15)))
+        star.addComponent(new StarComponent(Utils.getRandomNumberInRange(5, 15)));
+        const component = star.addComponent(new SpriteComponent(`star${Utils.getRandomNumberInRange(1, 3)}`)) as SpriteComponent;
+        component.sprite.scale.set(0.5, 0.5);
 
         return star;
     }

@@ -11,9 +11,10 @@ export class ECSEntity
         this.components = new Map();
     }
 
-    public addComponent(component: AbstractComponent): void
+    public addComponent(component: AbstractComponent): AbstractComponent
     {
         this.components.set(component.name, component);
+        return component;
     }
 
     public removeComponent(componentName: string): void

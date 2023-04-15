@@ -1,7 +1,7 @@
 import {AbstractView} from "../../../core/AbstractView";
 import {GameModel, GameModelEvent} from "../models/GameModel";
 import {PIXIS} from "../../../index";
-import {Graphics} from "pixi.js";
+import {Assets, Sprite} from "pixi.js";
 
 export class GameView extends AbstractView
 {
@@ -23,10 +23,9 @@ export class GameView extends AbstractView
     private start(): void
     {
         this._container.visible = true;
-        const graphics = new Graphics();
-        graphics.beginFill(0x000000);
-        graphics.drawRect(0, 0, PIXIS.windowWidth, PIXIS.windowHeight);
-        graphics.endFill();
-        this._container.addChild(graphics);
+        const texture = Assets.get("void");
+        const image = new Sprite(texture);
+        image.width = PIXIS.windowWidth
+        this._container.addChild(image);
     }
 }

@@ -18,6 +18,7 @@ export class Resources
             {name: "star3", path: "../../assets/star3.png"},
             {name: "bar", path: "../../assets/bar.png"},
             {name: "barLine", path: "../../assets/bar_line.png"},
+            {name: "void", path: "../../assets/void.png"},
         ];
 
         for (let texture of textures) {

@@ -1,7 +1,7 @@
 import {EventDispatcher} from "../../../core/EventDispatcher";
 import {ECSEngine} from "../ECSEngine";
 import {EntitiesFactory} from "../factory/EntitiesFactory";
-import {Utils} from "../../../utils/Utils";
+import {Strategies} from "../strategies/Strategies";
 
 export enum GameModelEvent
 {
@@ -10,41 +10,23 @@ export enum GameModelEvent
 
 export class GameModel extends EventDispatcher
 {
-    private _ECSEngine: ECSEngine;
-    private _starsTimeoutId: NodeJS.Timeout | null = null;
+    private readonly _ECSEngine: ECSEngine;
+    private _strategies: Strategies;
 
     constructor()
     {
         super();
         this._ECSEngine = new ECSEngine();
+
+        this._strategies = new Strategies(this._ECSEngine);
     }
 
     public start(): void
     {
         this.dispatchEvent(GameModelEvent.START)
         this._ECSEngine.start();
-        this.starsStrategy();
-        this._ECSEngine.addEntity(EntitiesFactory.createSpaceShip())
-        this._ECSEngine.addEntity(EntitiesFactory.createHeathBar())
-    }
-
-    private starsStrategy(): void
-    {
-        const createStar = () =>
-        {
-            this._ECSEngine.addEntity(EntitiesFactory.createStar());
-            const interval = Utils.getRandomNumberInRange(50, 300);
-            this._starsTimeoutId = setTimeout(createStar, interval);
-        };
-        const interval = Utils.getRandomNumberInRange(0, 1);
-        this._starsTimeoutId = setTimeout(createStar, interval);
-    }
-
-    public stopStarsStrategy(): void
-    {
-        if (this._starsTimeoutId) {
-            clearTimeout(this._starsTimeoutId);
-            this._starsTimeoutId = null;
-        }
+        this._strategies.start();
+        this._ECSEngine.addEntity(EntitiesFactory.createSpaceShip());
+        this._ECSEngine.addEntity(EntitiesFactory.createHeathBar());
     }
 }
