@@ -1,4 +1,5 @@
 import {AbstractComponent} from "../components/AbstractComponent";
+import {Utils} from "../../../utils/Utils";
 
 export class ECSEntity
 {
@@ -7,7 +8,7 @@ export class ECSEntity
 
     constructor(id?: number)
     {
-        this.id = id ?? 0;
+        this.id = id ?? Utils.generateId();
         this.components = new Map();
     }
 

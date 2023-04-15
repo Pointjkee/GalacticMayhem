@@ -15,6 +15,7 @@ export abstract class System implements EngineEntityListener
         this.entities = new Set();
         this.requiredComponents = requiredComponents;
         this.engine = engine;
+
     }
 
     public onAttach(engine: ECSEngine): void

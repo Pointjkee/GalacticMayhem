@@ -15,7 +15,7 @@ export class SpaceShipFlySystem extends System
 
     constructor(public engine: ECSEngine)
     {
-        super(["Position", "Velocity", "ShipControl", "Sprite"], engine);
+        super(["Position", "Velocity", "ShipControl", "Sprite", "HealthPoints"], engine);
 
         this.onKeyDown = (event: KeyboardEvent) =>
         {

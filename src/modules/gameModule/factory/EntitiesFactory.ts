@@ -35,6 +35,8 @@ export class EntitiesFactory
         ship.addComponent(new VelocityComponent(0, 0));
         ship.addComponent(new SpaceShipControlComponent(10));
         ship.addComponent(new SpriteComponent("ship"));
+        ship.addComponent(new HealthPointsComponent(100));
+
         return ship;
     }
 
@@ -70,7 +72,6 @@ export class EntitiesFactory
 
         bar.addComponent(new HealthPointsComponent(100));
         bar.addComponent(new HealthBarComponent());
-
 
         return bar;
     }

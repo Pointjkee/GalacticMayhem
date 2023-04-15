@@ -6,6 +6,7 @@ import {StarsSystem} from "./systems/StarsSystem";
 import {HealthControlSystem} from "./systems/HealthControlSystem";
 import {MeteorSystem} from "./systems/MeteorSystem";
 import { ECSEntity } from "./entities/ECSEntity";
+import {CollisionSystem} from "./systems/CollisionSystem";
 
 
 export interface EngineEntityListener
@@ -35,7 +36,8 @@ export class ECSEngine
             SpaceShipFlySystem,
             StarsSystem,
             HealthControlSystem,
-            MeteorSystem
+            MeteorSystem,
+            CollisionSystem,
         ]
         return result;
     }
