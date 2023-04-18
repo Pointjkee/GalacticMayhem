@@ -16,4 +16,9 @@ export class HealthPointsComponent extends AbstractComponent
         this._hp -= value;
         return this._hp <= 0 ? 0 : this._hp
     }
+
+    public get hp(): number
+    {
+        return this._hp
+    }
 }

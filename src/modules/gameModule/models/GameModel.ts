@@ -27,6 +27,5 @@ export class GameModel extends EventDispatcher
         this._ECSEngine.start();
         this._strategies.start();
         this._ECSEngine.addEntity(EntitiesFactory.createSpaceShip());
-        this._ECSEngine.addEntity(EntitiesFactory.createHeathBar());
     }
 }

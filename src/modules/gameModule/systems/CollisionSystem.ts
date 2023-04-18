@@ -5,11 +5,13 @@ import {SpriteComponent} from "../components/SpriteComponent";
 import {Point} from "pixi.js";
 import * as p2 from "p2";
 import {CollisionComponent} from "../components/CollisionComponent";
+import {HealthPointsComponent} from "../components/HealthPointsComponent";
 
 export class CollisionSystem extends System
 {
     private _arrayEntities: ECSEntity[] = [];
     private _count = 0;
+    private _mapCollisions = new Map<number, ECSEntity>();
 
     constructor(public engine: ECSEngine)
     {
@@ -20,30 +22,28 @@ export class CollisionSystem extends System
     {
         super.onEntityAdded(entity);
         this.addEntity(entity);
-
-        const collisionComponent = entity.getComponent("Collision") as CollisionComponent;
-        if (collisionComponent) {
+        const body = entity.getComponent<CollisionComponent>("Collision")?.body ;
+        if (body) {
             this._arrayEntities.push(entity);
-            this.engine.p2World.addBody(collisionComponent.body);
-            this.connectBodyAndSprite(entity);
+            this.engine.p2World.addBody(body);
+            this._mapCollisions.set(body.id, entity)
 
             //костылёк
             this._count++
             if (this._count === 1) {
-                this.engine.p2World.on('beginContact', this.contactSprite.bind(this));
+                this.engine.p2World.on('beginContact', this.contactSprites.bind(this));
             }
         }
     }
 
-    private connectBodyAndSprite(entity: ECSEntity): void
+    private contactSprites(event: p2Event): void
     {
-
-    }
-
-
-    private contactSprite(event: p2Event): void
-    {
-        let a = event.bodyA.id;
+        const entityA = this._mapCollisions.get(event.bodyA.id);
+        const entityB = this._mapCollisions.get(event.bodyB.id);
+        const healthComponentA = entityA.getComponent<HealthPointsComponent>("HealthPoints");
+        healthComponentA.damage(20);
+        const healthComponentB = entityB.getComponent<HealthPointsComponent>("HealthPoints");
+        healthComponentB.damage(20);
     }
 
 

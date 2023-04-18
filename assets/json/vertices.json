@@ -87,5 +87,29 @@
 				]
 			}
 		]
+	},
+	"bullet": {
+		"type": "fromPhysicsEditor",
+		"label": "bullet",
+		"isStatic": false,
+		"density": 0.1,
+		"restitution": 0,
+		"friction": 0.1,
+		"frictionAir": 0.01,
+		"frictionStatic": 0.5,
+		"collisionFilter": {
+			"group": 0,
+			"category": 1,
+			"mask": 255
+		},
+		"fixtures": [
+			{
+				"label": "",
+				"isSensor": false,
+				"vertices": [
+					[ { "x":34, "y":-13 }, { "x":3, "y":-13 }, { "x":3, "y":0 }, { "x":34, "y":0 } ]
+				]
+			}
+		]
 	}
 }

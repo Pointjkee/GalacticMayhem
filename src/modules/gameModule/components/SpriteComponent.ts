@@ -27,6 +27,8 @@ export class SpriteComponent extends AbstractComponent
 
     public removeSprite(): void
     {
+
         this._window?.removeChild(this._sprite);
+        // this._sprite.destroy();
     }
 }

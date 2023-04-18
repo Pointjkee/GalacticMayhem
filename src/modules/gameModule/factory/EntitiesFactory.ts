@@ -9,7 +9,6 @@ import {PIXIS} from "../../..";
 import {Star} from "../entities/Star";
 import {Utils} from "../../../utils/Utils";
 import {StarComponent} from "../components/StarComponent";
-import {HealthBar} from "../entities/HealthBar";
 import {HealthPointsComponent} from "../components/HealthPointsComponent";
 import {HealthBarComponent} from "../components/HealthBarComponent";
 import {Meteor} from "../entities/Meteor";
@@ -23,7 +22,9 @@ export class EntitiesFactory
         const bullet = new Bullet();
         bullet.addComponent(new BulletComponent(10));
         bullet.addComponent(new PositionComponent(position.x, position.y - 80));
-        bullet.addComponent(new SpriteComponent("bullet"));
+        const spriteComponent =  bullet.addComponent(new SpriteComponent("bullet")) as SpriteComponent;
+        bullet.addComponent(new HealthPointsComponent(20));
+        bullet.addComponent(new CollisionComponent(spriteComponent.sprite.texture.textureCacheIds[1]));
 
         return bullet;
     }
@@ -38,6 +39,7 @@ export class EntitiesFactory
         const spriteComponent = ship.addComponent(new SpriteComponent("ship")) as SpriteComponent;
         ship.addComponent(new HealthPointsComponent(100));
         ship.addComponent(new CollisionComponent(spriteComponent.sprite.texture.textureCacheIds[1]));
+        ship.addComponent(new HealthBarComponent());
 
         return ship;
     }
@@ -66,15 +68,5 @@ export class EntitiesFactory
         meteor.addComponent(new CollisionComponent(spriteComponent.sprite.texture.textureCacheIds[1]));
 
         return meteor
-    }
-
-    public static createHeathBar(): HealthBar
-    {
-        const bar = new HealthBar();
-
-        bar.addComponent(new HealthPointsComponent(100));
-        bar.addComponent(new HealthBarComponent());
-
-        return bar;
     }
 }

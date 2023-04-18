@@ -1,6 +1,7 @@
 import {ECSEngine, EngineEntityListener} from "../ECSEngine";
 import {SpriteComponent} from "../components/SpriteComponent";
 import {ECSEntity} from "../entities/ECSEntity";
+import {CollisionComponent} from "../components/CollisionComponent";
 
 export type ECSSystem = new (engine: ECSEngine) => System;
 
@@ -15,7 +16,6 @@ export abstract class System implements EngineEntityListener
         this.entities = new Set();
         this.requiredComponents = requiredComponents;
         this.engine = engine;
-
     }
 
     public onAttach(engine: ECSEngine): void
@@ -45,6 +45,10 @@ export abstract class System implements EngineEntityListener
         this.entities.delete(entity);
         if (entity.hasComponent("Sprite")) {
             entity.getComponent<SpriteComponent>("Sprite").removeSprite();
+        }
+        if (entity.hasComponent("Collision")) {
+            const body = entity.getComponent<CollisionComponent>("Collision").body;
+            this.engine.p2World.removeBody(body);
         }
     }
 
