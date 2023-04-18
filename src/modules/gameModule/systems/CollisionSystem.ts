@@ -2,52 +2,69 @@ import {System} from "./AbstractSystem";
 import {ECSEngine} from "../ECSEngine";
 import {ECSEntity} from "../entities/ECSEntity";
 import {SpriteComponent} from "../components/SpriteComponent";
+import {Point} from "pixi.js";
+import * as p2 from "p2";
+import {CollisionComponent} from "../components/CollisionComponent";
 
 export class CollisionSystem extends System
 {
     private _arrayEntities: ECSEntity[] = [];
+    private _count = 0;
 
     constructor(public engine: ECSEngine)
     {
-        super(["HealthPoints"], engine);
+        super(["Collision"], engine);
     }
 
     public onEntityAdded(entity: ECSEntity): void
     {
         super.onEntityAdded(entity);
         this.addEntity(entity);
-        if (entity.hasComponent("HealthPoints") && !entity.hasComponent("HealthBar")) {
+
+        const collisionComponent = entity.getComponent("Collision") as CollisionComponent;
+        if (collisionComponent) {
             this._arrayEntities.push(entity);
-        }
+            this.engine.p2World.addBody(collisionComponent.body);
+            this.connectBodyAndSprite(entity);
 
-    }
-
-    public update(deltaTime: number): void
-    {
-        for (let i = 0; i < this._arrayEntities.length - 1; i++) {
-            const entityA = this._arrayEntities[i];
-            const spriteA = entityA.getComponent<SpriteComponent>("Sprite").sprite;
-            const bounds1 = spriteA.getBounds();
-            for (let j = i + 1; j < this._arrayEntities.length; j++) {
-                const entityB = this._arrayEntities[j];
-                const spriteB = entityB.getComponent<SpriteComponent>("Sprite").sprite;
-                const bounds2 = spriteB.getBounds();
-
-                if (
-                    bounds1.x < bounds2.x + bounds2.width
-                    && bounds1.x + bounds1.width > bounds2.x
-                    && bounds1.y < bounds2.y + bounds2.height
-                    && bounds1.y + bounds1.height > bounds2.y
-                ) {
-                    if (entityA.hasComponent("Meteor")) {
-                        this.removeEntity(entityA);
-                        this._arrayEntities.splice(i, 1);
-                    } else if (entityB.hasComponent("Meteor")) {
-                        this.removeEntity(entityB)
-                        this._arrayEntities.splice(j, 1);
-                    }
-                }
+            //костылёк
+            this._count++
+            if (this._count === 1) {
+                this.engine.p2World.on('beginContact', this.contactSprite.bind(this));
             }
         }
     }
+
+    private connectBodyAndSprite(entity: ECSEntity): void
+    {
+
+    }
+
+
+    private contactSprite(event: p2Event): void
+    {
+        let a = event.bodyA.id;
+    }
+
+
+    public update(deltaTime: number): void
+    {
+        this._arrayEntities.forEach(entity =>
+        {
+            const {body} = entity.getComponent<CollisionComponent>("Collision");
+            const sprite = entity.getComponent<SpriteComponent>("Sprite").sprite;
+            body.position[0] = sprite.x + sprite.width / 2;
+            body.position[1] = sprite.y - sprite.height / 2;
+        })
+    }
+}
+
+export type p2Event = {
+    contactEquations: p2.ContactEquation[];
+    bodyA: p2.Body;
+    bodyB: p2.Body;
+    shapeA: p2.Convex;
+    shapeB: p2.Convex;
+    target: p2.World;
+    type: string;
 }

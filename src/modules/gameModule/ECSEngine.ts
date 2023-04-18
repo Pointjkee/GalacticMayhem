@@ -5,9 +5,9 @@ import {Ticker} from "pixi.js";
 import {StarsSystem} from "./systems/StarsSystem";
 import {HealthControlSystem} from "./systems/HealthControlSystem";
 import {MeteorSystem} from "./systems/MeteorSystem";
-import { ECSEntity } from "./entities/ECSEntity";
+import {ECSEntity} from "./entities/ECSEntity";
 import {CollisionSystem} from "./systems/CollisionSystem";
-
+import * as p2 from "p2";
 
 export interface EngineEntityListener
 {
@@ -21,12 +21,20 @@ export class ECSEngine
     private _systems: System[];
     private _stopped = true;
     private _entities: ECSEntity[] = [];
+    private readonly _p2World: p2.World;
     private readonly _entityListeners: EngineEntityListener[] = [];
 
     constructor()
     {
         this._systems = this.createSystemsInstances();
+        this._p2World = new p2.World({
+            gravity: [0, 0]
+        });
+    }
 
+    public get p2World(): p2.World
+    {
+        return this._p2World;
     }
 
     private createSystemsList(): ECSSystem[]
@@ -83,6 +91,7 @@ export class ECSEngine
     private update(deltaTime: number): void
     {
         if (!this._stopped) {
+            this._p2World.step(deltaTime);
             this._systems.forEach(system => system.update(deltaTime));
         }
 

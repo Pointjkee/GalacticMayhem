@@ -11,7 +11,7 @@ export class Resources
     {
         let textures: ArrayTextures[] = [
             {name: "bg", path: "../../assets/bg.jpg"},
-            {name: "ship", path: "../../assets/plane.png"},
+            {name: "ship", path: "../../assets/ship.png"},
             {name: "bullet", path: "../../assets/bullet.png"},
             {name: "star1", path: "../../assets/star1.png"},
             {name: "star2", path: "../../assets/star2.png"},
