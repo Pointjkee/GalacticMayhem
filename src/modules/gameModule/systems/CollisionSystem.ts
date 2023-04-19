@@ -6,6 +6,7 @@ import {Point} from "pixi.js";
 import * as p2 from "p2";
 import {CollisionComponent} from "../components/CollisionComponent";
 import {HealthPointsComponent} from "../components/HealthPointsComponent";
+import {Animations} from "../../../animations/Animations";
 
 export class CollisionSystem extends System
 {
@@ -48,9 +49,18 @@ export class CollisionSystem extends System
         }
         this._contacts.set(contactKey, true);
         const healthComponentA = entityA.getComponent<HealthPointsComponent>("HealthPoints");
-        healthComponentA.damage(20);
+        const hpA = healthComponentA.damage(20);
         const healthComponentB = entityB.getComponent<HealthPointsComponent>("HealthPoints");
-        healthComponentB.damage(20);
+        const hpB = healthComponentB.damage(20);
+
+        if (hpA === 0 && entityA.hasComponent("Meteor")) {
+            const spriteA = entityA.getComponent<SpriteComponent>("Sprite").sprite;
+            Animations.explosion(spriteA);
+        }
+        if (hpB === 0 && entityB.hasComponent("Meteor")) {
+            const spriteB = entityB.getComponent<SpriteComponent>("Sprite").sprite;
+            Animations.explosion(spriteB);
+        }
     }
 
     private end(event: p2Event): void
