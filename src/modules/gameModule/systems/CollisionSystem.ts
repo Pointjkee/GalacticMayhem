@@ -12,6 +12,7 @@ export class CollisionSystem extends System
     private _arrayEntities: ECSEntity[] = [];
     private _count = 0;
     private _mapCollisions = new Map<number, ECSEntity>();
+    private _contacts = new Map();
 
     constructor(public engine: ECSEngine)
     {
@@ -22,7 +23,7 @@ export class CollisionSystem extends System
     {
         super.onEntityAdded(entity);
         this.addEntity(entity);
-        const body = entity.getComponent<CollisionComponent>("Collision")?.body ;
+        const body = entity.getComponent<CollisionComponent>("Collision")?.body;
         if (body) {
             this._arrayEntities.push(entity);
             this.engine.p2World.addBody(body);
@@ -32,6 +33,7 @@ export class CollisionSystem extends System
             this._count++
             if (this._count === 1) {
                 this.engine.p2World.on('beginContact', this.contactSprites.bind(this));
+                this.engine.p2World.on('endContact', this.end.bind(this));
             }
         }
     }
@@ -40,10 +42,21 @@ export class CollisionSystem extends System
     {
         const entityA = this._mapCollisions.get(event.bodyA.id);
         const entityB = this._mapCollisions.get(event.bodyB.id);
+        const contactKey = `${event.bodyA.id}-${event.bodyB.id}`;
+        if (this._contacts.has(contactKey)) {
+            return;
+        }
+        this._contacts.set(contactKey, true);
         const healthComponentA = entityA.getComponent<HealthPointsComponent>("HealthPoints");
         healthComponentA.damage(20);
         const healthComponentB = entityB.getComponent<HealthPointsComponent>("HealthPoints");
         healthComponentB.damage(20);
+    }
+
+    private end(event: p2Event): void
+    {
+        const contactKey = `${event.bodyA.id}-${event.bodyB.id}`;
+        this._contacts.delete(contactKey);
     }
 
 

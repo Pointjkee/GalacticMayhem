@@ -43,13 +43,14 @@ export abstract class System implements EngineEntityListener
     public removeEntity(entity: ECSEntity): void
     {
         this.entities.delete(entity);
-        if (entity.hasComponent("Sprite")) {
-            entity.getComponent<SpriteComponent>("Sprite").removeSprite();
-        }
         if (entity.hasComponent("Collision")) {
             const body = entity.getComponent<CollisionComponent>("Collision").body;
             this.engine.p2World.removeBody(body);
         }
+        if (entity.hasComponent("Sprite")) {
+            entity.getComponent<SpriteComponent>("Sprite").removeSprite();
+        }
+
     }
 
     public abstract update(deltaTime: number): void;

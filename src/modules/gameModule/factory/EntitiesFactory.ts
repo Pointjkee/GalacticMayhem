@@ -65,6 +65,7 @@ export class EntitiesFactory
         meteor.addComponent(new HealthPointsComponent(20));
         meteor.addComponent(new MeteorComponent(Utils.getRandomNumberInRange(3, 6)));
         const spriteComponent = meteor.addComponent(new SpriteComponent(`meteor${Utils.getRandomNumberInRange(1, 2)}`)) as SpriteComponent;
+        meteor.addComponent(new PositionComponent(Utils.getRandomNumberInRange(spriteComponent.sprite.width, PIXIS.windowWidth - spriteComponent.sprite.width), 0));
         meteor.addComponent(new CollisionComponent(spriteComponent.sprite.texture.textureCacheIds[1]));
 
         return meteor
