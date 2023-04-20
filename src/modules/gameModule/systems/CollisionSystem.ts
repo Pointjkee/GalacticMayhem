@@ -61,6 +61,15 @@ export class CollisionSystem extends System
             const spriteB = entityB.getComponent<SpriteComponent>("Sprite").sprite;
             Animations.explosion(spriteB);
         }
+
+        if (hpA === 0 && entityA.hasComponent("ShipControl")) {
+            const spriteA = entityA.getComponent<SpriteComponent>("Sprite").sprite;
+            Animations.explosion(spriteA);
+        }
+        if (hpB === 0 && entityB.hasComponent("ShipControl")) {
+            const spriteB = entityB.getComponent<SpriteComponent>("Sprite").sprite;
+            Animations.explosion1(spriteB);
+        }
     }
 
     private end(event: p2Event): void

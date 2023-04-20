@@ -29,6 +29,15 @@ export class Resources
             {name: "Explosion_5", path: "../../assets/animations/explosion/Explosion_5.png"},
             {name: "Explosion_6", path: "../../assets/animations/explosion/Explosion_6.png"},
             {name: "Explosion_7", path: "../../assets/animations/explosion/Explosion_7.png"},
+
+            {name: "Explosion_1_1", path: "../../assets/animations/explosion_1/Explosion_1.png"},
+            {name: "Explosion_1_2", path: "../../assets/animations/explosion_1/Explosion_2.png"},
+            {name: "Explosion_1_3", path: "../../assets/animations/explosion_1/Explosion_3.png"},
+            {name: "Explosion_1_4", path: "../../assets/animations/explosion_1/Explosion_4.png"},
+            {name: "Explosion_1_5", path: "../../assets/animations/explosion_1/Explosion_5.png"},
+            {name: "Explosion_1_6", path: "../../assets/animations/explosion_1/Explosion_6.png"},
+            {name: "Explosion_1_7", path: "../../assets/animations/explosion_1/Explosion_7.png"},
+            {name: "Explosion_1_8", path: "../../assets/animations/explosion_1/Explosion_8.png"},
         ];
 
         for (let texture of textures) {
