@@ -49,9 +49,9 @@ export class CollisionSystem extends System
         }
         this._contacts.set(contactKey, true);
         const healthComponentA = entityA.getComponent<HealthPointsComponent>("HealthPoints");
-        const hpA = healthComponentA.damage(20);
+        const hpA = healthComponentA.damage(10);
         const healthComponentB = entityB.getComponent<HealthPointsComponent>("HealthPoints");
-        const hpB = healthComponentB.damage(20);
+        const hpB = healthComponentB.damage(10);
 
         if (hpA === 0 && entityA.hasComponent("Meteor")) {
             const spriteA = entityA.getComponent<SpriteComponent>("Sprite").sprite;

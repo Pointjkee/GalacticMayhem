@@ -24,7 +24,7 @@ export class EntitiesFactory
         bullet.addComponent(new BulletComponent(10));
         bullet.addComponent(new PositionComponent(position.x, position.y - 80));
         const spriteComponent =  bullet.addComponent(new SpriteComponent("bullet")) as SpriteComponent;
-        bullet.addComponent(new HealthPointsComponent(20));
+        bullet.addComponent(new HealthPointsComponent(1));
         bullet.addComponent(new CollisionComponent(spriteComponent.sprite.texture.textureCacheIds[1]));
 
         return bullet;

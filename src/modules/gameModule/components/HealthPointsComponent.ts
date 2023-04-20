@@ -13,8 +13,8 @@ export class HealthPointsComponent extends AbstractComponent
 
     public damage(value: number): number
     {
-        this._hp -= value;
-        return this._hp <= 0 ? 0 : this._hp
+        this._hp =  this._hp - value <= 0 ? 0 : this._hp - value;
+        return this._hp;
     }
 
     public get hp(): number
