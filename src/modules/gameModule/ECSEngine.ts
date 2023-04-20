@@ -8,6 +8,7 @@ import {MeteorSystem} from "./systems/MeteorSystem";
 import {ECSEntity} from "./entities/ECSEntity";
 import {CollisionSystem} from "./systems/CollisionSystem";
 import * as p2 from "p2";
+import {ShootSystem} from "./systems/ShootSystem";
 
 export interface EngineEntityListener
 {
@@ -46,6 +47,7 @@ export class ECSEngine
             HealthControlSystem,
             MeteorSystem,
             CollisionSystem,
+            ShootSystem
         ]
         return result;
     }

@@ -4,7 +4,6 @@ import {PositionComponent} from "../components/PositionComponent";
 import {SpaceShipControlComponent} from "../components/SpaceShipControlComponent";
 import {SpriteComponent} from "../components/SpriteComponent";
 import {ECSEngine} from "../ECSEngine";
-import {EntitiesFactory} from "../factory/EntitiesFactory";
 import {PIXIS} from "../../../index";
 import {ECSEntity} from "../entities/ECSEntity";
 
@@ -73,7 +72,6 @@ export class SpaceShipFlySystem extends System
                     position.y = maxY;
                 }
 
-
                 //Обновляем позицию спрайта
                 sprite.x = position.x;
                 sprite.y = position.y;
@@ -81,25 +79,9 @@ export class SpaceShipFlySystem extends System
         )
     }
 
-
     private handleKeyDown(event: KeyboardEvent): void
     {
-        if (event.code === "Space") {
-            this.shoot();
-        }
         this.setVelocity(event, true);
-    }
-
-    private shoot(): void
-    {
-        this.entities.forEach(entity =>
-        {
-            if (entity.hasComponent("ShipControl")) {
-                const bullet = EntitiesFactory.createBullet(entity.getComponent<PositionComponent>("Position"))
-                this.engine.addEntity(bullet)
-            }
-        })
-
     }
 
     private handleKeyUp(event: KeyboardEvent): void

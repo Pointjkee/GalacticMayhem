@@ -14,6 +14,7 @@ import {HealthBarComponent} from "../components/HealthBarComponent";
 import {Meteor} from "../entities/Meteor";
 import {MeteorComponent} from "../components/MeteorComponent";
 import {CollisionComponent} from "../components/CollisionComponent";
+import {ShootComponent} from "../components/ShootComponent";
 
 export class EntitiesFactory
 {
@@ -40,6 +41,7 @@ export class EntitiesFactory
         ship.addComponent(new HealthPointsComponent(100));
         ship.addComponent(new CollisionComponent(spriteComponent.sprite.texture.textureCacheIds[1]));
         ship.addComponent(new HealthBarComponent());
+        ship.addComponent(new ShootComponent(500));
 
         return ship;
     }
